@@ -1,0 +1,25 @@
+.datePicker {
+    border: 1px solid #E2E8F0 !important;
+    background: #F8FAFC !important;
+}
+
+.datePicker input::placeholder {
+    color: #5B8DEF !important;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    /* 21px */
+    letter-spacing: 0.07px;
+}
+.datePicker input {
+    color: #5B8DEF !important;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    /* 21px */
+    letter-spacing: 0.07px;
+}
+
+.datePicker :global(.ant-picker-suffix) {
+    color: #2A3FFC;
+}

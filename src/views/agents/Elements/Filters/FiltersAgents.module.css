@@ -1,0 +1,11 @@
+.containerFilters {
+    display: grid;
+    grid-template-columns: 1fr 1fr 200px;
+    gap: 15px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #E2E8F0;
+    background: #FFF;
+    padding: 10px;
+    margin-bottom: 15px;
+}

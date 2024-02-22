@@ -1,0 +1,16 @@
+.tag {
+    border-radius: 22px;
+    background: #05A660;
+    padding: 10px 8px;
+    max-width: 120px;
+}
+
+.title {
+    font-family: Montserrat;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    text-transform: uppercase;
+    text-align: center;
+}

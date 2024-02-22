@@ -1,0 +1,32 @@
+.contentPagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.contentPagination :global(.ant-pagination-item-active) {
+    border: 1px solid #2A3FFC;
+    background: #9DBFF9 !important;
+}
+
+.contentPagination :global(.ant-pagination-item) a {
+    color: #5B8DEF !important;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 170%;
+}
+
+.contentPagination :global(.ant-pagination-item-active) a {
+    color: #2A3FFC !important;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400 !important;
+    line-height: 170%;
+}
+
+.contentPagination :global(.ant-pagination-disabled) {
+    color: #DBDBDB !important;
+}

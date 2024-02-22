@@ -1,0 +1,30 @@
+.containerActions {
+    display: grid;
+    grid-template-columns: 1fr 160px 160px;
+    gap: 10px;
+}
+
+.contentSwitch {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 180px;
+    align-items: center;
+}
+
+.contentSwitch p {
+    color: #333;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.contentSwitch button {
+    max-width: 45px;
+}
+
+.buttonAction {
+    height: 51px !important;
+}
