@@ -11,7 +11,6 @@ export const useAuth = () => {
 
     if (response) {
       const resUser = await userMe(response.jwt, { populate: '*' });
-
       if (resUser) {
         signIn({
           jwt: response.jwt,
