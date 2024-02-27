@@ -59,6 +59,7 @@ export const useCrudServices = <T extends unknown>({
   const [search, setSearch] = useState('');
   const [sortMode, setSortMode] = useState<Sort>(sortingDefault);
   const [filters, setFilters] = useState<Params | undefined>();
+  const [activeHook, setActiveHook] = useState(initialGet);
 
   const getList = async () => {
     try {
@@ -131,6 +132,7 @@ export const useCrudServices = <T extends unknown>({
 
   const changePage = (number: number) => {
     setPage(number);
+    setActiveHook(true);
   };
 
   const getOneItem = async (id: number | string, params?: Params) => {
@@ -223,8 +225,10 @@ export const useCrudServices = <T extends unknown>({
 
   const changeFilters = (filter: Params) => {
     setFilters(filter);
+    setActiveHook(true);
   };
   const changeSort = (sort: Sort) => {
+    setActiveHook(true);
     if (sort.key === '') {
       setSortMode(sortingDefault);
 
@@ -234,13 +238,13 @@ export const useCrudServices = <T extends unknown>({
   };
 
   useEffect(() => {
-    if (!initialGet) return;
+    if (!activeHook) return;
     const timer = setTimeout(() => {
       getList();
     }, 200);
 
     return () => clearTimeout(timer);
-  }, [page, search, sortMode, filters]);
+  }, [page, search, sortMode, filters, activeHook]);
 
   return {
     list,
