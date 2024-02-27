@@ -10,14 +10,9 @@ import { useFormController } from '@/hooks/useFormController';
 import { useCrudServices } from '@/hooks/useCrudServices';
 import { Sort } from '@/constants/constants';
 import { useSearch } from '@/hooks/useSearch';
-import { Agent, AgentForm, AgentsFilter } from '@/types/Agents';
-import { ExistRegister } from '@/types/Api';
+import { AgentsFilter } from '@/types/Agents';
 import { ModalErrorsRelations } from '@/components/modal/modalErrorRelations/ModalErrorsRelations';
-
-interface ResponseVerify {
-  type: 'email' | 'name';
-  status: boolean;
-}
+import { Product, ProductForm } from '@/types/Product';
 
 export const AgentsView = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -34,21 +29,17 @@ export const AgentsView = () => {
     handleSearch,
     metaPage,
     changePage,
-  } = useCrudServices<Agent>({
-    path: 'agents',
+  } = useCrudServices<Product>({
+    path: 'products',
     sortingDefault: {
       key: 'id',
       mode: 'desc',
     },
-    fieldsSearch: ['name', 'email', '[agentCompanies][company][code]', '[agentCompanies][code]'],
     initialParams: {
-      populate: 'agentCompanies.company',
+      populate: 'category,cover',
     },
   });
-  const { getOneItem, loadingGet: loadingExits } = useCrudServices<ExistRegister>({
-    path: 'exists',
-    initialGet: false,
-  });
+
   const {
     openModal,
     resetController,
@@ -60,56 +51,24 @@ export const AgentsView = () => {
     activeModeError,
     errorRelations,
     showError,
-  } = useFormController<AgentForm, Agent>({
+  } = useFormController<ProductForm, Product>({
     initial_form: {
       name: '',
-      email: '',
-      active: true,
-      agentCompanies: [],
+      country: '',
+      description: '',
+      price: 0,
     },
   });
 
-  const verifyAgent = async (name: string, email: string): Promise<false | ResponseVerify> => {
-    const resName = await getOneItem('agents', {
-      identifier: name,
-    });
-    if (resName && resName.exists) return { status: resName.exists, type: 'name' };
-
-    const resEmail = await getOneItem('agents', {
-      identifier: email,
-    });
-    if (resEmail && resEmail.exists) return { status: resEmail.exists, type: 'email' };
-
-    return false;
-  };
-
-  const submitAgent = (value: AgentForm) => {
+  const submitAgent = (value: ProductForm) => {
     if (modeForm === 'new') createAgent(value);
     if (modeForm === 'edit') updateAgent(value);
   };
 
-  const createAgent = async (payload: AgentForm) => {
-    const resVerify = await verifyAgent(payload.name, payload.email);
-
-    if (resVerify && resVerify.status) {
-      if (resVerify.type === 'email') {
-        messageApi.warning('El Email del Agente ya ha sido registrado');
-
-        return;
-      }
-      if (resVerify.type === 'name') {
-        messageApi.warning('El Nombre del Agente ya ha sido registrado');
-
-        return;
-      }
-    }
+  const createAgent = async (payload: ProductForm) => {
     const resCreate = await create({
       data: {
         ...payload,
-        agentCompanies: payload.agentCompanies?.map((value) => ({
-          ...value,
-          company: value.company?.id,
-        })),
       },
     });
     if (resCreate) {
@@ -118,7 +77,7 @@ export const AgentsView = () => {
       reset();
     }
   };
-  const updateAgent = async (payload: AgentForm) => {
+  const updateAgent = async (payload: ProductForm) => {
     if (!selectRow) return;
     const resUpdate = await update(selectRow.id, { data: payload });
     if (resUpdate) {
@@ -128,18 +87,20 @@ export const AgentsView = () => {
     }
   };
 
-  const selectEditAgent = (value: Agent) => {
+  const selectEditAgent = (value: Product) => {
     activeEditMode(
       {
-        active: value.active,
+        country: value.country,
+        description: value.description,
         name: value.name,
-        email: value.email,
+        price: value.price,
+        category: value?.id
       },
       value,
     );
   };
 
-  const selectDeleteAgent = async (value: Agent) => {
+  const selectDeleteAgent = async (value: Product) => {
     const resDelete = await deleteItem(value.id);
     if (resDelete?.data) {
       messageApi.success('Compañia Eliminada');
@@ -208,7 +169,7 @@ export const AgentsView = () => {
         show={modalActive}
         initialForm={formValue}
         onSubmit={submitAgent}
-        loading={loadingAction || loadingExits}
+        loading={loadingAction}
         idAgent={selectRow?.id}
       />
 

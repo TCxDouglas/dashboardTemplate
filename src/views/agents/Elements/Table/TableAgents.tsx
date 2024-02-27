@@ -1,87 +1,56 @@
+import styles from './TableAgent.module.css'
 import { ColumnsType } from 'antd/es/table';
-import { Tag } from 'antd';
 import TableAntd from '@/components/Table/TableAntd/TableAndt';
-import { COLOR_TAG, StatusTag } from '@/components/tag/StatusTag/StatusTag';
 import { ActionTable } from '@/components/buttons/ActionTable/ActionTable';
 import { Sort } from '@/constants/constants';
-import { Agent, AgentCompany } from '@/types/Agents';
-import { removeObjDuplicates } from '@/utils/Arrays';
-import { Company } from '@/types/company';
+import { Product } from '@/types/Product';
+import { formatNumberWithMoney } from '@/utils/Numbers';
+import { Avatar } from 'antd';
+import { addPathImage } from '@/utils/Url';
 
 interface Props {
-  list: Agent[];
+  list: Product[];
   loading: boolean;
-  onEdit: (value: Agent) => void;
-  onDelete: (value: Agent) => void;
+  onEdit: (value: Product) => void;
+  onDelete: (value: Product) => void;
   onSort: (sort: Sort) => void;
 }
 
 export const TableAgents = ({ list, loading, onEdit, onDelete, onSort }: Props) => {
-  const columns: ColumnsType<Agent> = [
+  const columns: ColumnsType<Product> = [
     {
       title: 'Nombre',
       dataIndex: 'name',
       key: 'name',
       sorter: true,
+      render: (_, value) => {
+
+        return (
+          <div className={styles.contentImage}>
+            <Avatar src={addPathImage(value.cover?.url || '')} ></Avatar>
+            <p>{value.name}</p>
+          </div>
+        )
+      }
     },
     {
-      title: 'Correo Electronico',
-      dataIndex: 'email',
-      key: 'email',
+      title: 'Descripcion',
+      dataIndex: 'description',
+      key: 'description',
       sorter: true,
     },
     {
-      title: 'Compañias Asociadas',
-      dataIndex: 'company',
-      key: 'company',
-      render: (_, value) => {
-        if (!value.agentCompanies) return <></>;
-
-        const companys = value.agentCompanies
-          .filter((company) => company.company)
-          .map((company) => company.company) as Company[];
-        const filterCompanys = removeObjDuplicates<Company>(companys, 'id');
-
-        return (
-          <>
-            {filterCompanys.map((company) => {
-              return <Tag key={company.id}>{company.code}</Tag>;
-            })}
-          </>
-        );
-      },
-    },
-    {
-      title: 'Codigos',
-      dataIndex: 'code',
-      key: 'code',
-      render: (_, value) => {
-        if (!value.agentCompanies) return <></>;
-
-        const companys = value.agentCompanies;
-        const filterCompanys = removeObjDuplicates<AgentCompany>(companys, 'id');
-
-        return (
-          <>
-            {filterCompanys.map((company) => {
-              return <Tag key={company.id}>{company.code}</Tag>;
-            })}
-          </>
-        );
-      },
-    },
-    {
-      title: 'Estado',
-      dataIndex: 'active',
-      key: 'active',
+      title: 'Pais',
+      dataIndex: 'country',
+      key: 'country',
       sorter: true,
-      render: (value) => (
-        <StatusTag
-          label={value ? 'Activo' : 'Inactivo'}
-          colorTag={value ? COLOR_TAG.success : COLOR_TAG.error}
-          colorText="#FFF"
-        />
-      ),
+    },
+    {
+      title: 'Precio',
+      dataIndex: 'price',
+      key: 'price',
+      sorter: true,
+      render: (_, value) => <>${formatNumberWithMoney(value.price)}</>
     },
     {
       title: 'Acciones',
