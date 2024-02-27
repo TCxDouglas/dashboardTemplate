@@ -1,0 +1,34 @@
+.contentDrag {
+    border-radius: 6px;
+    border: 4px dashed #F9E7F9;
+}
+
+.contentDrag :global(.ant-upload-drag) {
+    border: none;
+    background: #FFF !important;
+}
+
+.containerImagesPreview {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    padding: 10px;
+    z-index: 100000;
+}
+
+.contentImage {
+    position: relative;
+    width: 100%;
+}
+
+.buttonCancel {
+    position: absolute;
+    top: 0;
+    right: 4px;
+}
+
+.image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
