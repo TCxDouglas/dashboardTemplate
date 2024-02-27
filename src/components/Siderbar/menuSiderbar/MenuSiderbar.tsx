@@ -21,10 +21,10 @@ export const MenuSiderbar = () => {
 
   const OPTION_MENU: Array<OptionMenu> = [
     {
-      key: '/agents',
+      key: '/products',
       icon: <AgentIcon fill="#FFF" />,
-      label: 'Agentes',
-      onClick: () => push('/agents'),
+      label: 'Productos',
+      onClick: () => push('/products'),
     },
   ];
 

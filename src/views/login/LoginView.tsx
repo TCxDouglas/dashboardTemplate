@@ -17,7 +17,7 @@ export const LoginView = () => {
       setLoading(true);
       const resLogin = await login(value);
 
-      if (resLogin) await router.push('/company');
+      if (resLogin) await router.push('/products');
     } catch (error) {
       setLoading(false);
       await messageApi.error('Usuario o Contraseña invalida');
