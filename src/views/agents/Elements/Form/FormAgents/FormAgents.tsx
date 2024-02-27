@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Col, Form, Input, Row } from 'antd';
-import { useEffect } from 'react';
+import { Col, Form, Input, InputNumber, Row, Select } from 'antd';
+import { useEffect, useMemo } from 'react';
 import { ActionForm } from '@/components/buttons/ActionForm/ActionForm';
 import { ModalForm } from '@/components/modal/modalForm/ModalForm';
 import { ProductForm } from '@/types/Product';
+import { useCrudServices } from '@/hooks/useCrudServices';
+import { Category } from '@/types/Category';
 
 interface Props {
   show: boolean;
@@ -16,8 +18,14 @@ interface Props {
 }
 
 export const FormAgents = ({ show, onClose, initialForm, onSubmit, loading, idAgent }: Props) => {
+  const { list } = useCrudServices<Category>({
+    path: 'categories'
+  })
   const [form] = Form.useForm<ProductForm>();
 
+  const options_category = useMemo(() => {
+    return list.map(value => ({ label: value.name, value: value.id }))
+  }, [list])
 
   const handleSubmit = (value: ProductForm) => {
     onSubmit(value);
@@ -65,14 +73,38 @@ export const FormAgents = ({ show, onClose, initialForm, onSubmit, loading, idAg
             </Col>
             <Col span={12}>
               <Form.Item
-                label="Correo del Agente"
-                name="email"
-                rules={[
-                  { required: true, message: 'Campo Requerido' },
-                  { type: 'email', message: 'Ingrese un email valido' },
-                ]}
+                label="Descripcion"
+                name="description"
+                rules={[{ required: true, message: 'Campo Requerido' }]}
               >
                 <Input />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Pais"
+                name="country"
+                rules={[{ required: true, message: 'Campo Requerido' }]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Precio"
+                name="price"
+                rules={[{ required: true, message: 'Campo Requerido' }]}
+              >
+                <InputNumber style={{ width: '100%' }} />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Categoria"
+                name="category"
+                rules={[{ required: true, message: 'Campo Requerido' }]}
+              >
+                <Select style={{ width: '100%' }} options={options_category} />
               </Form.Item>
             </Col>
           </Row>
