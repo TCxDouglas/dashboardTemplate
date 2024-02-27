@@ -44,7 +44,7 @@ export const FormProduct = ({ show, onClose, initialForm, onSubmit, loading, idA
       <ModalForm
         show={show}
         onClose={onClose}
-        title={idAgent ? 'Editando Agente' : 'Agregando Nuevo Agente'}
+        title={idAgent ? 'Editando Producto' : 'Agregando Nuevo Producto'}
         loading={loading}
         footer={
           <ActionForm

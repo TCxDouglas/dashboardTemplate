@@ -50,7 +50,7 @@ export const FiltersProduct = ({ onOpen, onFilters }: Props) => {
         options={STATUS_OPTION}
         onChange={(value) => setSelectStatus(value as boolean)}
       />
-      <AddButton label="Nuevo Agente" onClick={onOpen} />
+      <AddButton label="Nuevo Producto" onClick={onOpen} />
     </div>
   );
 };

@@ -72,7 +72,7 @@ export const ProductsView = () => {
       },
     });
     if (resCreate) {
-      messageApi.success('Agente Creado');
+      messageApi.success('Producto Creado');
 
       reset();
     }
@@ -81,7 +81,7 @@ export const ProductsView = () => {
     if (!selectRow) return;
     const resUpdate = await update(selectRow.id, { data: payload });
     if (resUpdate) {
-      messageApi.success('Agente Actualizado');
+      messageApi.success('Producto Actualizado');
 
       reset();
     }
@@ -103,7 +103,7 @@ export const ProductsView = () => {
   const selectDeleteProduct = async (value: Product) => {
     const resDelete = await deleteItem(value.id);
     if (resDelete?.data) {
-      messageApi.success('Compañia Eliminada');
+      messageApi.success('Producto Eliminado');
 
       reset();
 
