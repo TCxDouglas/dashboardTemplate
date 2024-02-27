@@ -7,6 +7,7 @@ import { ModalForm } from '@/components/modal/modalForm/ModalForm';
 import { ProductForm } from '@/types/Product';
 import { useCrudServices } from '@/hooks/useCrudServices';
 import { Category } from '@/types/Category';
+import { DragImages } from '@/components/DragImages/DragImages';
 
 interface Props {
   show: boolean;
@@ -106,6 +107,9 @@ export const FormAgents = ({ show, onClose, initialForm, onSubmit, loading, idAg
               >
                 <Select style={{ width: '100%' }} options={options_category} />
               </Form.Item>
+            </Col>
+            <Col span={24}>
+              <DragImages listPhotos={[]} listPreview={[]} onChangePhotos={() => { }} onChangePreview={() => { }} />
             </Col>
           </Row>
         </Form>
