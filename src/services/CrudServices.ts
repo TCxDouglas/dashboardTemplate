@@ -1,11 +1,11 @@
 import axios, { AxiosError } from 'axios';
-import { API_PROAFI } from '@/constants/constants';
+import { API_URL } from '@/constants/constants';
 import { ResponseError, ResponseStrapi } from '@/types/Api';
 import { PropsDelete, PropsGet, PropsGetOne, PropsPost, PropsPut } from '@/types/CrudApi';
 
 export const getListApi = async <T>({ params, path, token }: PropsGet) => {
   try {
-    const { data, status } = await axios.get<ResponseStrapi<T[]>>(`${API_PROAFI}/${path}`, {
+    const { data, status } = await axios.get<ResponseStrapi<T[]>>(`${API_URL}/${path}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -22,7 +22,7 @@ export const createApi = async <T>({ path, payload, token, formData }: PropsPost
   try {
     const payloadSend = payload || formData;
     const { data, status } = await axios.post<ResponseStrapi<T>>(
-      `${API_PROAFI}/${path}`,
+      `${API_URL}/${path}`,
       payloadSend,
       {
         headers: {
@@ -40,7 +40,7 @@ export const createApi = async <T>({ path, payload, token, formData }: PropsPost
 
 export const updateApi = async <T>({ id, path, payload, token, noID, formData }: PropsPut) => {
   const payloadSend = payload || formData;
-  const completePath = noID ? `${API_PROAFI}/${path}` : `${API_PROAFI}/${path}/${id}`;
+  const completePath = noID ? `${API_URL}/${path}` : `${API_URL}/${path}/${id}`;
   try {
     const { data, status } = await axios.put<ResponseStrapi<T>>(completePath, payloadSend, {
       headers: {
@@ -57,7 +57,7 @@ export const updateApi = async <T>({ id, path, payload, token, noID, formData }:
 
 export const getOneApi = async <T>({ params, path, token, id }: PropsGetOne) => {
   try {
-    const { data, status } = await axios.get<ResponseStrapi<T>>(`${API_PROAFI}/${path}/${id}`, {
+    const { data, status } = await axios.get<ResponseStrapi<T>>(`${API_URL}/${path}/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -72,7 +72,7 @@ export const getOneApi = async <T>({ params, path, token, id }: PropsGetOne) => 
 
 export const deleteApi = async <T>({ id, path, token }: PropsDelete) => {
   try {
-    const { data, status } = await axios.delete<ResponseStrapi<T>>(`${API_PROAFI}/${path}/${id}`, {
+    const { data, status } = await axios.delete<ResponseStrapi<T>>(`${API_URL}/${path}/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -89,7 +89,7 @@ export const deleteApi = async <T>({ id, path, token }: PropsDelete) => {
 
 export const sendRequestApi = async <T>({ params, path, token, id }: PropsGetOne) => {
   try {
-    const { status } = await axios.get<ResponseStrapi<T>>(`${API_PROAFI}/${path}/${id}`, {
+    const { status } = await axios.get<ResponseStrapi<T>>(`${API_URL}/${path}/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
